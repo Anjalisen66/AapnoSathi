@@ -1,0 +1,60 @@
+/* Honeycomb Grid Container */
+.honeycomb-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Vertical gap between rows */
+    align-items: center;
+    animation: scroll-left 10s linear infinite;
+  width: calc(200% + 10px); /* Double the width to accommodate duplicated content */
+   
+  }
+  @keyframes scroll-left {
+    from {
+      transform: translateX(0); /* Start at the beginning */
+    }
+    to {
+      transform: translateX(-50%); /* Move one set of hexagons left */
+    }
+  }
+
+
+  
+  /* Row styling */
+  .honeycomb-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Horizontal gap between hexagons */
+  }
+  
+  /* Offset for second row */
+  .offset-row {
+    transform: translateX(55px); /* Half the width of a hexagon */
+  }
+  
+  /* Hexagon styles */
+  .hexagon {
+    width: 100px;
+    height: 115px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    overflow: hidden;
+    position: relative;
+    background-color: #ccc; /* Fallback color */
+  }
+  
+  .hex-inner {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .hex-background {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .hexagon:hover .hex-background {
+    transform: scale(1.1);
+  }
+  

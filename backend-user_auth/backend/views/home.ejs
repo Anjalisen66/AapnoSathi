@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .submit-btn {
+            display: inline-block;
+            width: auto;
+            padding: 10px;
+            background-color: #472dbb;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #4565a0;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Welcome to Home Page</h1>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum nemo accusantium excepturi? Architecto magnam ut eveniet nisi pariatur itaque quia quaerat assumenda quisquam laudantium. Sit placeat modi vel illum voluptas.</p>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi culpa nesciunt quasi impedit repellat facere ea ab itaque eius quia, sapiente harum maxime voluptatum soluta accusamus nobis! Vel, sint at.</p>
+
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita repellendus consequuntur voluptates perferendis distinctio nemo aut quasi! Pariatur deserunt laudantium, ea, amet, ipsum minima debitis voluptatum distinctio ducimus quidem odio.</p>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="logout()" type="submit" class="submit-btn">
+            Logout
+        </button>
+    </div>
+
+    <script>
+        function logout() {
+            // Clear session data (localStorage or sessionStorage)
+            localStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("isLoggedIn");
+
+            // Redirect to login page
+            window.location.href = '/';
+
+            // Ensure that after redirecting to the login page, the user cannot go back to the home page
+            setTimeout(function() {
+                // Replace the history entry with the login page, preventing the user from going back
+                window.location.replace('/'); // Replaces the current page with the login page
+
+                // Disable browser back button navigation
+                window.history.pushState(null, null, window.location.href);
+                window.onpopstate = function () {
+                    window.history.pushState(null, null, window.location.href);
+                };
+            }, 100);
+        }
+
+        // Disable browser history navigation to prevent back button from going back to the home page
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, null, window.location.href);
+            };
+        }
+    </script>
+
+</body>
+</html>

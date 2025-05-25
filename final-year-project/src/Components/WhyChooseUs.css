@@ -1,0 +1,93 @@
+.why-choose-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: #edeecb;
+}
+
+.why-choose-title {
+  font-size: 2.5rem;
+  color: #c56728;
+  margin-bottom: 2rem;
+}
+
+/* Grid Layout */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* Feature Item Styling */
+.feature-item {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  text-align: center;
+}
+
+/* Brown Box Styling */
+.feature-icon {
+  background-color: #a05a2c;
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-icon img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.feature-icon p {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Hover Effects */
+.feature-item:hover .feature-icon {
+  transform: translateY(-10px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-description {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin-top: 1rem;
+  background-color: #fff;
+  color: #5a442a;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+/* Show Description on Hover */
+.feature-item:hover .feature-description {
+  opacity: 1;
+  height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .why-choose-title {
+    font-size: 2rem;
+  }
+
+  .feature-icon {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-icon {
+    padding: 1rem;
+  }
+}

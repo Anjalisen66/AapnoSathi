@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>SignUp</h2>
+        <form id="signupForm" action="/signup" method="POST">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required autocomplete="off">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          </div>
+
+        <input type="checkbox" id="show-password"> Show Password
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <script>
+        const showPasswordCheckbox = document.getElementById('show-password');
+        const passwordField = document.getElementById('password');
+        
+        // Show/hide password functionality
+        showPasswordCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                passwordField.type = 'text'; // Show password
+            } else {
+                passwordField.type = 'password'; // Hide password
+            }
+        });
+
+        // Handle form submission via JavaScript
+        document.getElementById("signupForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            const formData = new FormData(this);
+            const formObj = Object.fromEntries(formData);
+
+            // Send data to backend using Fetch API
+            const response = await fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formObj),
+            });
+
+            // Parse the response from the server
+            const result = await response.json();
+
+            // If there's an error message, display it
+            if (result.errorMessage) {
+                alert(result.errorMessage); // Show error as an alert
+
+                // Refill form with previous data
+                document.getElementById("name").value = result.data.name;
+                document.getElementById("email").value = result.data.email;
+                document.getElementById("password").value = result.data.password; // Keep the entered password
+
+            } else if (result.successMessage) {
+                alert(result.successMessage); // Show success message
+                //window.location.href = "/login"; // Redirect to login page after successful signup
+            }
+        });
+    </script>
+    <p>Already have an account? <a href="/">Login</a></p>
+    </div>
+    
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>SignUp</h2>
+        <form id="signupForm">
+            <div class="form-group" id="userDetails">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required autocomplete="off">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <input type="checkbox" id="show-password"> Show Password
+            </div>
+            <div class="form-group" id="otpSection" style="display: none;">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" placeholder="Enter the OTP sent to your email">
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <p>Already have an account? <a href="/">Login</a></p>
+
+        <script>
+            const signupForm = document.getElementById('signupForm');
+            const otpSection = document.getElementById('otpSection');
+            const userDetails = document.getElementById('userDetails');
+        
+            signupForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+        
+                const name = document.getElementById('name')?.value;
+                const email = document.getElementById('email')?.value;
+                const password = document.getElementById('password')?.value;
+                const otp = document.getElementById('otp')?.value;
+        
+                const endpoint = otpSection.style.display === 'none' ? '/signup' : '/verify-otp';
+        
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, otp }),
+                });
+        
+                const result = await response.json();
+        
+                if (result.successMessage) {
+                    alert(result.successMessage);
+                    window.location.href = '/';
+                } else if (result.errorMessage) {
+                    alert(result.errorMessage);
+        
+                    if (result.step === 'otp-required') {
+                        otpSection.style.display = 'block';  // Show OTP section
+                        userDetails.style.display = 'none';  // Hide user details section
+                    }
+                }
+            });
+        </script>
+        
+    </div>
+</body>
+</html>-->
+

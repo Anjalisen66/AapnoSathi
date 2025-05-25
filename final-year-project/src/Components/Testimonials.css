@@ -1,0 +1,22 @@
+/* Arrows */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #edeecb !important;
+}
+
+/* Pagination bullets */
+.swiper-pagination-bullet {
+  background-color: #edeecb !important;
+  opacity: 1;
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+  background-color: #edeecb !important;
+  transform: scale(1.2); /* Optional: make active dot slightly bigger */
+}
+
+/* Optional: Add Garamond font to pagination container */
+.swiper-pagination {
+  font-family: Garamond, serif !important;
+}

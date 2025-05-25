@@ -1,0 +1,213 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="username" placeholder="Enter your name" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="password" required>
+            </div>
+            <input type="checkbox" id="show-password"> Show Password
+            <p>Remember password? <a href="/forgotpass">Forgot Password</a></p>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        
+        <p>Don't have an account? <a href="/signup">Signup</a></p>
+
+        <script>
+            const showPasswordCheckbox = document.getElementById('show-password');
+            const passwordField = document.getElementById('password');
+            
+            showPasswordCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    passwordField.type = 'text'; // Show password
+                } else {
+                    passwordField.type = 'password'; // Hide password
+                }
+            });
+
+            // Handle form submission using fetch for JSON response
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                const username = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, email, password }),
+                });
+
+                const result = await response.json();
+
+                // Display appropriate message based on response
+                if (result.success) {
+                    alert(result.message); // Show success message
+                    window.location.href = result.redirect || '/home'; // Redirect to home if success
+                } else {
+                    alert(result.message); // Show error message
+                }
+            });
+        </script>
+    </div>
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+            </div>
+            
+            <!-- Password section -->
+            <div class="form-group" id="passwordSection">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+        
+            <label for="show-password" id="showPasswordLabel">
+                <input type="checkbox" id="show-password"> Show Password
+            </label>
+            
+            <!-- "Login with OTP" option -->
+            <div class="form-group">
+                <button type="button" id="otpLoginBtn" class="submit-btn">Login with OTP</button>
+            </div>
+
+            <!-- OTP section (Initially hidden) -->
+            <div class="form-group" id="otpSection" style="display: none;">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" placeholder="Enter the OTP sent to your email">
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        
+        <p>Don't have an account? <a href="/signup">Signup</a></p>
+        
+
+        <script>
+            const loginForm = document.getElementById('loginForm');
+            const otpSection = document.getElementById('otpSection');
+            const passwordSection = document.getElementById('passwordSection');
+            const otpLoginBtn = document.getElementById('otpLoginBtn');
+            const showPasswordCheckbox = document.getElementById('show-password');
+            const passwordField = document.getElementById('password');
+            const showPasswordLabel = document.getElementById('showPasswordLabel');  // Select the label containing "Show Password" text
+            
+            let isOtpLogin = false;  // Track whether the OTP login flow is active
+        
+            showPasswordCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    passwordField.type = 'text'; // Show password
+                } else {
+                    passwordField.type = 'password'; // Hide password
+                }
+            });
+        
+            // Handle OTP login button click
+            otpLoginBtn.addEventListener('click', async function () {
+                const email = document.getElementById('email').value;
+        
+                // Send a request to the server to send OTP to the email
+                const response = await fetch('/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: document.getElementById('name').value }),
+                });
+        
+                const result = await response.json();
+        
+                if (result.successMessage) {
+                    alert(result.successMessage);
+                    otpSection.style.display = 'block';  // Show OTP input section
+                    passwordSection.style.display = 'none';  // Hide password section
+                    otpLoginBtn.style.display = 'none';  // Hide "Login with OTP" button
+                    document.getElementById('password').removeAttribute('required');  // Remove password requirement
+                    if (showPasswordCheckbox) showPasswordCheckbox.style.display = 'none';  // Hide "Show Password" checkbox
+                    if (showPasswordLabel) showPasswordLabel.style.display = 'none';  // Hide "Show Password" text
+                    isOtpLogin = true;  // Set flag to indicate OTP login
+                } else {
+                    alert(result.errorMessage);
+                }
+            });
+        
+            // Handle form submission (either with password or OTP)
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+        
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password')?.value;
+                const otp = document.getElementById('otp')?.value;
+                const name = document.getElementById('name').value;
+        
+                let endpoint = '/login';  // Default endpoint for password login
+                let body;
+        
+                if (isOtpLogin) {
+                    // If OTP is being used, submit OTP
+                    endpoint = '/verify-login-otp';
+                    body = JSON.stringify({ name, otp });
+                } else {
+                    // Otherwise, submit email and password
+                    body = JSON.stringify({ name, password });
+                }
+        
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: body,
+                });
+        
+                const result = await response.json();
+        
+                if (result.successMessage) {
+                    alert(result.successMessage);
+                    if (result.redirect) window.location.href = result.redirect;
+                } else if (result.errorMessage) {
+                    alert(result.errorMessage);
+                }
+            });
+        </script>
+        
+        
+    </div>
+</body>
+</html>

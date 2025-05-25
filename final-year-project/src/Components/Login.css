@@ -1,0 +1,94 @@
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align to the top */
+  height: 100vh; /* Full screen height */
+  background-color: #edeecb; /* Background color */
+  font-family: "Garamond", serif; /* Set font family to Garamond */
+}
+
+.hexagon-gallery {
+  width: 100%; /* Full width of the screen */
+  height: 200px; /* Default height */
+  background-repeat: repeat;
+  background-size: contain; /* Ensure the image scales to fit */
+  background-position: center top;
+}
+
+/* Adjust height for smaller screens */
+@media (max-width: 768px) {
+  .hexagon-gallery {
+    height: 150px; /* Smaller height on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .hexagon-gallery {
+    height: 120px; /* Smaller height on mobile devices */
+  }
+}
+
+.login-form {
+  margin-top: 20px; /* Space between hexagon and form */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #edeecb;
+  text-color: #652d0e;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: orange; /* Orange color for heading */
+}
+
+.login-input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-btn {
+  width: 80%;
+  padding: 10px;
+  background-color: #652d0e; /* Green button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  background-color: #652d0e1a; /* Darker green on hover */
+}
+
+.forgot-password {
+  color: lightgray; /* Light gray color for forgot password text */
+}
+
+.signup-container {
+  margin-top: 20px; /* Space between login form and sign-up text */
+  text-align: center; /* Center align sign-up text */
+}
+
+.signup-text {
+  font-size: 18px; /* Increased font size */
+  color: orange; /* Orange color for sign-up link */
+}
+
+.signup-text a {
+  color: orange; /* Ensure the sign-up link is also orange */
+  text-decoration: none; /* Remove underline */
+}
+
+.signup-text a:hover {
+  text-decoration: underline; /* Underline the link on hover */
+}

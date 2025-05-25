@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Reset Password</h2>
+        <form id="resetPasswordForm" action="/resetpass" method="post">
+            <div class="form-group">
+                <input type="hidden" name="email" value="<%= email %>"> <!-- Dynamically inject email -->
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+            </div>
+            <input type="checkbox" id="show-new-password"> Show Password
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <input type="checkbox" id="show-confirm-password"> Show Password
+            <button type="submit" class="submit-btn">Reset Password</button>
+        </form>
+    
+
+        <script>
+            // Show password toggle for new password
+            const showNewPasswordCheckbox = document.getElementById('show-new-password');
+            const newPasswordField = document.getElementById('newPassword');
+            
+            showNewPasswordCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    newPasswordField.type = 'text'; // Show new password
+                } else {
+                    newPasswordField.type = 'password'; // Hide new password
+                }
+            });
+        
+            // Show password toggle for confirm password
+            const showConfirmPasswordCheckbox = document.getElementById('show-confirm-password');
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            
+            showConfirmPasswordCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    confirmPasswordField.type = 'text'; // Show confirm password
+                } else {
+                    confirmPasswordField.type = 'password'; // Hide confirm password
+                }
+            });
+        
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.getElementById('resetPasswordForm');
+                if (form) {
+                    form.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+        
+                        const newPassword = document.getElementById('newPassword').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        const email = document.querySelector('input[name="email"]').value;
+        
+                        // Strong password criteria (same as signup)
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+        
+                        // Validate the new password
+                        if (!passwordRegex.test(newPassword)) {
+                            alert("Password must be at least 8 characters long and include numbers, special characters, uppercase, and lowercase letters.");
+                            return;
+                        }
+        
+                        // Validate confirm password
+                        if (!passwordRegex.test(confirmPassword)) {
+                            alert("Confirm password must be same as new password.");
+                            return;
+                        }
+        
+                        // Ensure the passwords match
+                        if (newPassword !== confirmPassword) {
+                            alert('Passwords do not match.');
+                            return;
+                        }
+        
+                        const response = await fetch('/resetpass', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email, newPassword, confirmPassword }),
+                        });
+        
+                        const result = await response.json();
+                        alert(result.message); // Show success or error message
+                        if (result.success) {
+                            window.location.href = '/'; // Redirect to login page after successful reset
+                        }
+                    });
+                }
+            });
+        </script>
+        
+    </div>
+</body>
+</html>
