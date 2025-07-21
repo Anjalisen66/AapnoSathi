@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 // Connect to the MongoDB database
-const connect = mongoose.connect(process.env.MONGO_URL);
+const connect = mongoose.connect(process.env.MONGO_URL,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}));
 
 // Check if the database is connected successfully
 connect
