@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // Connect to the MongoDB database
-const connect = mongoose.connect("mongodb://localhost:27017/user-auth");
+const connect = mongoose.connect(process.env.MONGO_URL);
 
 // Check if the database is connected successfully
 connect
