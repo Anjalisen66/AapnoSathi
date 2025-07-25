@@ -4,7 +4,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node accommodation/server.js"
+     "start:accommodation": "node accommodation/server.js",
+     "start:food": "node food/server.js",
+     "start:tourist": "node tourist/server.js",
+     "start:transportation": "node transportation/server.js"
   },
   "author": "",
   "license": "ISC",
