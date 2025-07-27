@@ -11,7 +11,7 @@ const port = 5000;
 const Query = require('./QueryModel')
 // const Query = mongoose.model("Query", querySchema);
 
-mongoose.connect('mongodb://localhost:27017/querydb', {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -37,10 +37,10 @@ app.use(cors({
 app.use(express.json());
 
 // Define backend service URIs (which you can configure via environment variables)
-const accomodationBackend = "http://localhost:5001";
-const foodBackend = "http://localhost:5002";
-const transportationBackend = "http://localhost:5003";
-const touristBackend = "http://localhost:5004";
+const accomodationBackend = process.env.ACCOMODATION_BACKEND;
+const foodBackend = process.env.FOOD_BACKEND;
+const transportationBackend = process.env.TRANSPORTATION_BACKEND;
+const touristBackend = process.env.TOURIST_BACKEND;
 
 // Proxy Routes to individual backends
 
