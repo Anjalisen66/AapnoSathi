@@ -9,13 +9,14 @@ const Transport = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const limit = 10;
+  const TRANSPORT_URL=process.env.REACT_APP_TRANSPORT_URL
 
   const fetchBuses = async () => {
     setLoading(true);
     try {
       const url = location
-        ? `http://localhost:5004/api/buses?location=${location}&page=${page}&limit=${limit}`
-        : `http://localhost:5004/api/buses?page=${page}&limit=${limit}`;
+        ? `${TRANSPORT_URL}/api/buses?location=${location}&page=${page}&limit=${limit}`
+        : `${TRANSPORT_URL}/api/buses?page=${page}&limit=${limit}`;
       const response = await fetch(url);
       const data = await response.json();
 

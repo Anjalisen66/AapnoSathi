@@ -10,6 +10,8 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const AUTH_URL=process.env.REACT_APP_AUTH_URL
+
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -32,11 +34,12 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:7000/signup', {
+      const response = await axios.post(`${AUTH_URL}/signup`, {
         name: username,
         email,
         password,
-      });
+      },
+     { withCredentials: true });
 
       const data = response.data;
       setLoading(false);

@@ -80,6 +80,7 @@ const ExploreJodhpur = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const TOURIST_URL=process.env.REACT_APP_TOURIST_URL
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const ExploreJodhpur = () => {
   const fetchPlaces = async (filterParams = {}) => {
     try {
       const query = new URLSearchParams(filterParams).toString();
-      const response = await axios.get(`http://localhost:5003/api/places?${query}`);
+      const response = await axios.get(`${TOURIST_URL}/api/places?${query}`);
       setPlaces(response.data);
     } catch (error) {
       console.error("Error fetching places:", error);
@@ -212,7 +213,7 @@ const ExploreJodhpur = () => {
               className="border-2 text-[#693303] rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`http://localhost:5003/uploads/${place.image}`}
+                src={`${TOURIST_URL}/uploads/${place.image}`}
                 alt={place.name}
                 className="w-full h-40 object-cover"
               />

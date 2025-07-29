@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URL, {
   useUnifiedTopology: true,
 });
 
-const allowedOrigins = ['http://localhost:5173',
+const allowedOrigins = ['http://localhost:3000',
                        'https://aapno-sathi.vercel.app' ]
 // Enable CORS and JSON parsing middleware
 app.use(cors({

@@ -214,7 +214,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173',
+const allowedOrigins = ['http://localhost:3000',
                        'https://aapno-sathi.vercel.app' ]
 
 

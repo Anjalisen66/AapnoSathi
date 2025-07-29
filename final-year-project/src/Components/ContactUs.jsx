@@ -18,6 +18,7 @@ const ContactUs = () => {
     email: "",
     message: "",
   });
+  const MAINSERVER_URL=process.env.REACT_APP_MAINSERVER_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +29,7 @@ const ContactUs = () => {
   e.preventDefault();
 
   try {
-    const response = await fetch("http://localhost:5000/api/query", {
+    const response = await fetch(`${MAINSERVER_URL}/api/query`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

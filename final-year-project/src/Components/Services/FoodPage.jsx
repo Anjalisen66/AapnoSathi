@@ -7,62 +7,6 @@ import zomato from "../../assets/1637644.webp"
 
 // --- FoodPage Component ---
 const FoodPage = () => {
-  const restaurants = [
-    {
-      name: "INDIGO RESTAURANT",
-      type: "Vegetarian",
-      area: "Indian, Grill",
-      location:
-        "72XC+2PP, Roof Top Gouri Haveli, Laykan Mohalla, Gulab Sagar, Jodhpur, Rajasthan 342001",
-      rating: "4.8",
-      img: "wonderful-view-from-roof.jpg",
-    },
-    {
-      name: "Sholla",
-      type: "Vegetarian",
-      area: "Indian, Grill",
-      location:
-        "53, Uchiyarda Road Near Euro International School, Welcomhotel By Itc Hotels, Jodhpur 342027 India",
-      rating: "4.9",
-      img: "the-word-sholla-is-derived.jpg",
-    },
-    {
-      name: "The Recipe Restaurant",
-      type: "Vegetarian",
-      area: "Chinese, Indian",
-      location:
-        "58 Residency Road opposite S N medical college near Goyal hospital, Jodhpur 342003 India",
-      rating: "4.9",
-      img: "the-recipe-best-vegetarian.jpg",
-    },
-    {
-      name: "Dev Kothi Roof Top Restaurant",
-      type: "Vegetarian",
-      area: "Indian, Asian",
-      location:
-        "Killi Khana, Near Shiv Mandir at Dev Kothi Boutique Heritage Home Stay, Jodhpur 342002 India",
-      rating: "4.9",
-      img: "dev-kothi-roof-top-restaurant.jpg",
-    },
-    {
-      name: "Indique Restaurant & Bar",
-      type: "Vegetarian",
-      area: "Indian, Asian",
-      location:
-        "Hotel Pal Haveli Near Clock Tower, Gulab Sagar, Jodhpur 342001 India",
-      rating: "4.3",
-      img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/35/5f/c0/outdoor.jpg?w=1100&h=600&s=1",
-    },
-    {
-      name: "Cafe Laalten",
-      type: "Vegetarian",
-      area: "Chinese, Indian",
-      location:
-        "Inside Pol, Opp Balaji Temple, Near Sadar Haveli, Jodhpur 342001 India",
-      rating: "5.0",
-      img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/25/45/81/61/cafe-laalten-rooftop.jpg?w=1100&h=600&s=1",
-    },
-  ];
 
   const [foodPlaces, setFoodPlaces] = useState([]);
   const [foodFilters, setFoodFilters] = useState({
@@ -74,6 +18,7 @@ const FoodPage = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const FOOD_URL=process.env.REACT_APP_FOOD_URL;
 
   useEffect(() => {
     fetchFoods(foodFilters, currentPage);
@@ -83,7 +28,7 @@ const FoodPage = () => {
     try {
       const params = { ...filterParams, page, limit: 10 };
       const query = new URLSearchParams(params).toString();
-      const response = await axios.get(`http://localhost:5002/api/foods?${query}`);
+      const response = await axios.get(`${FOOD_URL}/api/foods?${query}`);
       setFoodPlaces(response.data.data);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -148,12 +93,6 @@ const FoodPage = () => {
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
-        {/* <select className="px-4 py-2 border border-[#652d0e] rounded bg-[#f9e8d2] outline-none cursor-pointer">
-          <option>₹</option>
-          <option>₹₹</option>
-          <option>₹₹₹</option>
-          <option>₹₹₹₹</option>
-        </select> */}
         <button onClick={applyFoodFilters} className="px-5 py-2 bg-[#652d0e] text-white rounded hover:bg-[#652d0eE6]">
           Filter
         </button>
@@ -171,7 +110,7 @@ const FoodPage = () => {
               className="border-2 border-darkbrown rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`http://localhost:5002/uploads/${res.image}`}
+                src={`${FOOD_URL}/uploads/${res.image}`}
                 alt={res.name}
                 className="w-full h-40 object-cover"
               />

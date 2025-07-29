@@ -11,13 +11,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const AUTH_URL=process.env.REACT_APP_AUTH_URL
 
   const handleLogin = async (event) => {
     event.preventDefault(); // Prevent page refresh
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post(`${AUTH_URL}/login`, {
         name: username,
         password,
       });

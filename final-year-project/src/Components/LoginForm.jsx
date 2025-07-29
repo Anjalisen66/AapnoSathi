@@ -24,10 +24,11 @@ export default function LoginForm() {
       }
     }
   };
+  const AUTH_URL=process.env.REACT_APP_AUTH_URL;
 
   const sendOtp = async () => {
     try {
-      const res = await axios.post("http://localhost:7000/send-otp", { name });
+      const res = await axios.post(`${AUTH_URL}/send-otp`, { name }, { withCredentials: true });
       if (res.data.successMessage) {
         alert(res.data.successMessage);
         setOtpSent(true);
@@ -42,10 +43,10 @@ export default function LoginForm() {
   const verifyOtp = async () => {
     try {
       const joinedOtp = otp.join("");
-      const res = await axios.post("http://localhost:7000/verify-login-otp", {
+      const res = await axios.post(`${AUTH_URL}/verify-login-otp`, {
         name,
         otp: joinedOtp,
-      });
+      }, { withCredentials: true });
 
       if (res.data.successMessage) {
         alert(res.data.successMessage);
@@ -62,10 +63,10 @@ navigate("/"); // or any route like "/tourist-places"
 
   const loginWithPassword = async () => {
     try {
-      const res = await axios.post("http://localhost:7000/login", {
+      const res = await axios.post(`${AUTH_URL}/login`, {
         name,
         password,
-      });
+      }, { withCredentials: true });
 
       if (res.data.successMessage) {
         alert(res.data.successMessage);

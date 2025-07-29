@@ -10,124 +10,7 @@ import {
 } from "react-icons/fa";
 import { Pagination } from "./Pagination";
 
-const accommodations = [
-  {
-    name: "Shivaay Girls PG",
-    location: "Sardarpura, Jodhpur",
-    price: "₹ 8000/month",
-    food: "Food extra",
-    image: "/pg1.jpg",
-    phone: "9876543210",
-    roomOptions: {
-      Single: "₹10,400",
-      Twin: "₹7,800",
-      Triple: "₹5,900",
-      Four: "₹5,200",
-    },
-    description:
-      "PG for Girls | CCTV | Wi-Fi | Washing Machine | AC rooms | Parking",
-    tag: "Girls",
-    distance: {
-      university: "0.4 km from Agri University",
-      station: "3.2 km from Jodhpur Railway Station",
-    },
-  },
-  {
-    name: "Karam Residency, Mandore, Jodhpur",
-    location: "Mandore, Jodhpur",
-    price: "₹ 2,500/month",
-    food: "Food extra",
-    image: "/pg2.jpg",
-    phone: "9123456780",
-    roomOptions: {
-      Single: "₹10,400",
-      Twin: "₹7,800",
-      Triple: "₹5,900",
-      Four: "₹5,200",
-    },
-    description: "Near Market | Secure Area | Shared Kitchen | Balcony Rooms",
-    tag: "Girls",
-    distance: {
-      university: "0.5 km from JNVU",
-      station: "2.5 km from Jodhpur Railway Station",
-    },
-  },
-  {
-    name: "Bed in a 2 Bhk apartment",
-    location: "Paota, Jodhpur",
-    price: "₹ 20,000/month",
-    food: "Food extra",
-    image: "/pg3.jpeg",
-    phone: "9123456780",
-    roomOptions: {
-      Single: "₹9,800",
-      Twin: "₹15,500",
-    },
-    description: "Near Market | Secure Area | Shared Kitchen | Balcony Rooms",
-    tag: "Boys",
-    distance: {
-      university: "0.5 km from JNVU",
-      station: "2.5 km from Jodhpur Railway Station",
-    },
-  },
-  {
-    name: "Ridhi Sidhi Girls Hostel and P.G Paying Guest/Hostels",
-    location: "Paota, Jodhpur",
-    price: "₹ 6,500/month",
-    food: "Food included",
-    image: "/pg4.jpg",
-    phone: "9123456780",
-    roomOptions: {
-      Twin: "₹7,000",
-      Triple: "₹6,500",
-    },
-    description: "Near Market | Secure Area | Shared Kitchen | Balcony Rooms",
-    tag: "Girls",
-    distance: {
-      university: "0.5 km from JNVU",
-      station: "2.5 km from Jodhpur Railway Station",
-    },
-  },
-  {
-    name: "Mathur Paying Guest Hostel for Boys/Hostels",
-    location: "Chopasni Housing Board, Jodhpur",
-    price: "₹ 5,500/month",
-    food: "Food extra",
-    image: "/pg5.jpeg",
-    phone: "9123456780",
-    roomOptions: {
-      Single: "₹6,500",
-      Twin: "₹6,000",
-      Triple: "₹5,500",
-    },
-    description: "Near Market | Secure Area | Shared Kitchen | Balcony Rooms",
-    tag: "Boys",
-    distance: {
-      university: "0.5 km from JNVU",
-      station: "2.5 km from Jodhpur Railway Station",
-    },
-  },
-  {
-    name: "Shri Hari Boys PG Hostel Jodhpur is only for NEET and IIT JEE Students",
-    location: "Pal Road, Jodhpur",
-    price: "₹2,000/month",
-    food: "Food extra",
-    image: "/pg6.jpeg",
-    phone: "9123456780",
-    roomOptions: {
-      Single: "₹3,000",
-      Twin: "₹2,500",
-      Triple: "₹2,000",
-    },
-    description: "Near Market | Secure Area | Shared Kitchen | Balcony Rooms",
-    tag: "Boys",
-    distance: {
-      university: "0.5 km from JNVU",
-      station: "2.5 km from Jodhpur Railway Station",
-    },
-  },
-  // Add more PGs as needed
-];
+
 
 const Accommodation = () => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -143,6 +26,8 @@ const Accommodation = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const ACCOMODATION_URL=process.env.REACT_APP_ACCOMODATION_URL;
+  const AUTH_URL=process.env.REACT_APP_AUTH_URL
 
   useEffect(() => {
     fetchPlaces();
@@ -151,7 +36,7 @@ const Accommodation = () => {
   const fetchPlaces = async (filterParams = {}) => {
     try {
       const query = new URLSearchParams({ ...filterParams, page: currentPage, limit: itemsPerPage }).toString();
-      const response = await axios.get(`http://localhost:5000/api/pgs?${query}`);
+      const response = await axios.get(`${AUTH_URL}/api/pgs?${query}`);
 
       setFetchedAccommodations(response.data.places);
       setTotalPages(response.data.totalPages); // Assuming totalPages is part of the response
@@ -280,7 +165,7 @@ const Accommodation = () => {
               className="border-2 border-darkbrown rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`http://localhost:5001/uploads/${pg.image}`}
+                src={`${ACCOMODATION_URL}/uploads/${pg.image}`}
                 alt={pg.name}
                 className="w-full h-40 object-cover"
               />
