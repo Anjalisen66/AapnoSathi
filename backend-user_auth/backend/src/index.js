@@ -215,7 +215,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 const app = express();
 
 const allowedOrigins = ['http://localhost:3000',
-                       'https://aapno-sathi.vercel.app' ]
+    'https://aapno-sathi.vercel.app']
 
 
 // Convert data into JSON format
@@ -223,19 +223,19 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 
@@ -308,7 +308,12 @@ app.post("/signup", async (req, res) => {
             from: process.env.Email_User,
             to: data.email,
             subject: "Welcome to the Website - Login Link",
-            text: `Hello ${data.name},\n\nThank you for registering on our website. Please click the link below to login:\n\nhttp://localhost:7000/`,
+            text: `Hello ${data.name},\n\nThank you for registering on our website. You can log in using one of the links below:
+
+           🔗 Localhost (for development): http://localhost:7000/
+
+           🌐 Live Website: https://your-vercel-project.vercel.app/
+           `,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -415,7 +420,7 @@ app.post("/verify-login-otp", async (req, res) => {
 
         if (user.otpExpiry < Date.now()) {
             return res.json({ errorMessage: "OTP has expired. Please request a new one." });
-        }                       
+        }
 
         // Invalidate OTP after successful login
         await collection.updateOne(
@@ -426,7 +431,7 @@ app.post("/verify-login-otp", async (req, res) => {
         const token = jwt.sign({ name: user.name, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.json({ successMessage: "Login successful.", token });
     } catch (err) {
- 
+
         console.error(err);
         res.json({ errorMessage: "An error occurred. Please try again later." });
     }
