@@ -4,7 +4,6 @@ const cors = require("cors");
 const placeRoutes = require("./routes/placeRoutes");
 const dotenv = require("dotenv");
 const path = require("path");
-const __dirname = path.resolve();
 
 dotenv.config();
 const app = express();
