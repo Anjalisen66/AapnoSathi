@@ -166,7 +166,7 @@ const Accommodation = () => {
               className="border-2 border-darkbrown rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`${ACCOMODATION_URL}/uploads/${pg.image}`}
+                src={`${ACCOMODATION_URL}/${pg.image}`}
                 alt={pg.name}
                 className="w-full h-40 object-cover"
               />

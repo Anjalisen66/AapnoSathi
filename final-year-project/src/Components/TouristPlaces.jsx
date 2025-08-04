@@ -213,7 +213,7 @@ const ExploreJodhpur = () => {
               className="border-2 text-[#693303] rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`${TOURIST_URL}/uploads/${place.image}`}
+                src={`${TOURIST_URL}/${place.image}`}
                 alt={place.name}
                 className="w-full h-40 object-cover"
               />
