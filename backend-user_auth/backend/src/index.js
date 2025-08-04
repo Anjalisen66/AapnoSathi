@@ -209,7 +209,9 @@ const crypto = require("crypto");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET
-
+const baseUrl = process.env.NODE_ENV === 'production' 
+  ? 'https://aapno-sathi.vercel.app/' 
+  : 'http://localhost:7000/';
 
 
 const app = express();
@@ -309,11 +311,7 @@ app.post("/signup", async (req, res) => {
             to: data.email,
             subject: "Welcome to the Website - Login Link",
             text: `Hello ${data.name},\n\nThank you for registering on our website. You can log in using one of the links below:
-
-           🔗 Localhost (for development): http://localhost:7000/
-
-           🌐 Live Website: https://aapno-sathi.vercel.app/
-           `,
+           ${baseUrl}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
