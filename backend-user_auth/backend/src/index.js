@@ -312,7 +312,7 @@ app.post("/signup", async (req, res) => {
 
            🔗 Localhost (for development): http://localhost:7000/
 
-           🌐 Live Website: https://your-vercel-project.vercel.app/
+           🌐 Live Website: https://aapno-sathi.vercel.app/
            `,
         };
 
