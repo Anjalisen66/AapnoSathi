@@ -3,13 +3,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const foodRoutes = require("./routes/foodRoutes");
 const dotenv = require("dotenv");
+const path = require("path");
+const __dirname = path.resolve();
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads")); // Make uploads folder public
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
+
 
 
 mongoose.connect(process.env.MONGO_URI, {

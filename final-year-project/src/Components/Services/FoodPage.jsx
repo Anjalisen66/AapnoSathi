@@ -110,7 +110,7 @@ const FoodPage = () => {
               className="border-2 border-darkbrown rounded-lg overflow-hidden shadow-md bg-white"
             >
               <img
-                src={`${FOOD_URL}/uploads/${res.image}`}
+                src={`${FOOD_URL}/${res.image}`}
                 alt={res.name}
                 className="w-full h-40 object-cover"
               />

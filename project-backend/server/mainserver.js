@@ -11,6 +11,8 @@ const port = 5000;
 const Query = require('./QueryModel')
 // const Query = mongoose.model("Query", querySchema);
 
+require('dotenv').config();
+
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -166,4 +168,6 @@ app.post("/api/query", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Backend API Gateway running on http://localhost:${port}`);
+  console.log("Mongo URl:", process.env.MONGO_URL);
+
 });

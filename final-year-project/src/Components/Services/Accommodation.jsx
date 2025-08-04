@@ -36,7 +36,7 @@ const Accommodation = () => {
   const fetchPlaces = async (filterParams = {}) => {
     try {
       const query = new URLSearchParams({ ...filterParams, page: currentPage, limit: itemsPerPage }).toString();
-      const response = await axios.get(`${AUTH_URL}/api/pgs?${query}`);
+      const response = await axios.get(`${ACCOMODATION_URL}/api/pgs?${query}`);
 
       setFetchedAccommodations(response.data.places);
       setTotalPages(response.data.totalPages); // Assuming totalPages is part of the response
@@ -76,6 +76,7 @@ const Accommodation = () => {
       setSelectedPhone(phone); // Show phone when expanding
     }
   };
+  
 
 
   return (
